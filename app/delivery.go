@@ -52,16 +52,13 @@ func Delivery(w http.ResponseWriter, r *http.Request) {
 	respond := requestAPI(fmt.Sprintf(API["url"], fCode, tCode), API["key"])
 
 	if respond.SiCepat.Status.Code == 200 {
-		
 		for i := 0; i < len(respond.SiCepat.Results); i++ {
-			
 			provider := req.Provider
 			service := respond.SiCepat.Results[i].Service
 			cost := respond.SiCepat.Results[i].Tariff
 			serviceDescription := respond.SiCepat.Results[i].Description
 			etd := respond.SiCepat.Results[i].Etd
 
-			
 			sql := fmt.Sprintf("INSERT INTO api03.cost (from_code, to_code, provider, service, cost, service_description, etd) VALUES ('%s','%s','%s','%s',%v,'%s','%s')", fCode, tCode, provider, service, cost, serviceDescription, etd )
 			_ , err := db.Exec(sql)
 			if err != nil {
