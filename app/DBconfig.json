@@ -1,0 +1,7 @@
+{
+    "user":"rezafiansyah",
+    "dbengine":"postgres",
+    "port":5432,
+    "dbname":"api",
+    "host":"localhost"
+}
