@@ -1,3 +1,6 @@
 %syntax-version=1.0.0
 %project=api03
 
+appschema 2020-05-18T22:46:39Z Reza Fiansyah <reza@example.com> # Add schema for database
+location 2020-05-18T22:51:50Z Reza Fiansyah <reza@example.com> # add location table
+cost 2020-05-18T23:59:15Z Reza Fiansyah <reza@example.com> # Create cost table
