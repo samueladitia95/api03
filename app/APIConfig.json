@@ -1,0 +1,6 @@
+{
+    "sicepat": {
+        "url":"http://api.sicepat.com/customer/tariff/?origin=%s&destination=%s&weight=1",
+        "key":"77372f5ed15134b3b33186d6a5d47333"
+    }
+}

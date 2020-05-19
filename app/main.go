@@ -43,7 +43,7 @@ func main() {
 		panic(err.Error())
 	}
 
-	dbInfo := fmt.Sprintf("host:%s port:%d dbname:%s user:%s sslmode:disable", dbConfig.Host, dbConfig.Port, dbConfig.DBName, dbConfig.User)
+	dbInfo := fmt.Sprintf("host=%s port=%d dbname=%s user=%s sslmode=disable", dbConfig.Host, dbConfig.Port, dbConfig.DBName, dbConfig.User)
 
 	db, err = sql.Open(dbConfig.DBEngine, dbInfo)
 	if err != nil {
