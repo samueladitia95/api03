@@ -1,37 +1,37 @@
 package main
 
 import (
-	"net/http"
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"os"
 )
 
 // Req is to store user delivery request
 type Req struct {
 	FromCode string `json:"fromcode"`
-	ToCode string `json:"tocode"`
+	ToCode   string `json:"tocode"`
 	Provider string `json:"provider"`
 }
 
 // ResultType type struct
 type ResultType struct {
-	Service string `json:"service"`
+	Service     string `json:"service"`
 	Description string `json:"description"`
-	Tariff int `json:"tariff"`
-	Etd string `json:"etd"`
+	Tariff      int    `json:"tariff"`
+	Etd         string `json:"etd"`
 }
 
 // StatusType type struct
 type StatusType struct {
-	Code int `json:"code"`
+	Code        int    `json:"code"`
 	Description string `json:"description"`
 }
 
 // ProviderType type struct
 type ProviderType struct {
 	Results []ResultType `json:"results"`
-	Status StatusType	`json:"status"`
+	Status  StatusType   `json:"status"`
 }
 
 // ProviderSiCepat type struct
@@ -53,14 +53,14 @@ func Delivery(w http.ResponseWriter, r *http.Request) {
 
 	if respond.SiCepat.Status.Code == 200 {
 		for i := 0; i < len(respond.SiCepat.Results); i++ {
-			provider := req.Provider
-			service := respond.SiCepat.Results[i].Service
-			cost := respond.SiCepat.Results[i].Tariff
-			serviceDescription := respond.SiCepat.Results[i].Description
-			etd := respond.SiCepat.Results[i].Etd
+			provider := &req.Provider
+			service := &respond.SiCepat.Results[i].Service
+			cost := &respond.SiCepat.Results[i].Tariff
+			serviceDescription := &respond.SiCepat.Results[i].Description
+			etd := &respond.SiCepat.Results[i].Etd
 
-			sql := fmt.Sprintf("INSERT INTO api03.cost (from_code, to_code, provider, service, cost, service_description, etd) VALUES ('%s','%s','%s','%s',%v,'%s','%s')", fCode, tCode, provider, service, cost, serviceDescription, etd )
-			_ , err := db.Exec(sql)
+			sql := fmt.Sprintf("INSERT INTO api03.cost (from_code, to_code, provider, service, cost, service_description, etd) VALUES ('%s','%s','%s','%s',%v,'%s','%s')", fCode, tCode, *provider, *service, *cost, *serviceDescription, *etd)
+			_, err := db.Exec(sql)
 			if err != nil {
 				panic(err.Error())
 			}
@@ -72,19 +72,19 @@ func Delivery(w http.ResponseWriter, r *http.Request) {
 }
 
 func requestAPI(url string, contentValue string) ProviderSiCepat {
-    req, err := http.NewRequest("GET", url, nil)
-    if err != nil {
-        panic(err.Error())
+	req, err := http.NewRequest("GET", url, nil)
+	if err != nil {
+		panic(err.Error())
 	}
 
 	req.Header.Set("api-key", contentValue)
-    resp, err := http.DefaultClient.Do(req)
-    if err != nil {
-        panic(err.Error())
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		panic(err.Error())
 	}
-	
+
 	defer resp.Body.Close()
-	
+
 	var respond ProviderSiCepat
 	json.NewDecoder(resp.Body).Decode(&respond)
 	return respond
