@@ -91,7 +91,7 @@ func requestAPI(url string, contentValue string) ProviderSiCepat {
 }
 
 func readAPIConfig(provider string) map[string]string {
-	apiConfigJSON, err := os.Open("./app/APIConfig.json")
+	apiConfigJSON, err := os.Open("./APIConfig.json")
 	if err != nil {
 		panic(err.Error())
 	}

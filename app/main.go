@@ -32,7 +32,7 @@ func mainRouter() {
 }
 
 func main() {
-	dbConfigJSON, err := os.Open("./app/DBconfig.json")
+	dbConfigJSON, err := os.Open("./DBconfig.json")
 	if err != nil {
 		panic(err.Error())
 	}
